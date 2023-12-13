@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "Mary Francesca",
+        "email": "fsdafa@fjudaf",
+        "isOrganizer": false
+    },
+    {
+        "id": 2,
+        "name": "Joshua Napinas",
+        "email": "joshua@gmail.com",
+        "isOrganizer": false
+    }
+]
