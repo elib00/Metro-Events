@@ -8,11 +8,12 @@ body {
     box-sizing: border-box;
 }
 
-.container {
+.main-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
+    width: 100%;
 }
 
 .details-box {
@@ -26,4 +27,28 @@ body {
     border: solid 1px black;
     border-radius: 20px;
     padding: 20px;
+}
+
+.side-tab {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+}
+
+.event-tab {
+    height: 100%;
+    width: 70% ; 
+    background-color: azure;
+}
+
+.request-box {
+    width: 80%;
+    height: 50%;
+    gap: 10px;
+    border-radius: 20px;
+    border: solid 1px black; 
+    background-color: blanchedalmond
 }

@@ -3,7 +3,7 @@
 $reviewsJSON = "../data/reviews.json";
 $usersJSON = "../data/users.json";
 $adminJSON = "../data/admin.json";
-
+$requestsJSON = "../data/requests.json";
 
 $currentUser = null;
 
@@ -32,6 +32,17 @@ function getReviewsData(){
     }
 
     $data = file_get_contents($reviewsJSON);
+    return json_decode($data, true);
+}
+
+function getRequestsData(){
+    global $requestsJSON;
+    if (!file_exists($requestsJSON)) {
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($requestsJSON);
     return json_decode($data, true);
 }
 

@@ -1,9 +1,8 @@
 [
     {
-        "eventID": "1",
+        "eventID": 1,
         "id": 1,
         "name": "Joshua",
-        "email": null,
         "body": "sdfafasf"
     }
 ]

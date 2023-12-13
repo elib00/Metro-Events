@@ -6,11 +6,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         permitLogin($user);
         setcookie("user", json_encode($user, JSON_PRETTY_PRINT), time() + 3600, "/");
         $admin = getAdminData();
-        var_dump($admin);
         if($user == $admin[0]){
             header("Location: admin.php");
         }else{
-            header("Location: index.php");
+            header("Location: user.php");
         }
     }else{
         header("Location: ?user_not_found");
@@ -33,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel='stylesheet' href='index.css'>
 </head>
 <body>
-    <div class="container">
+    <div class="main-wrapper">
         <form style="display: flex; justify-content: center; align-items: center; width: 50%"
             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
             <div class="details-box">

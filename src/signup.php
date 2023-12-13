@@ -6,7 +6,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $userExists = getUser($name);
     if(!($userExists)){
         $newUser = [
-            "id" => generateID(getUsersData($usersJSON)),
+            "id" => generateID(getUsersData()),
             "name" => $name,
             "email" => $email,
             "isOrganizer" => false
@@ -32,12 +32,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Create Account</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr. net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel='stylesheet' href='index.css'>
 </head>
 <body>
-    <div class="container">
+    <div class="main-wrapper">
         <form style="display: flex; justify-content: center; align-items: center; width: 50%"
             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
             <div class="details-box">
@@ -55,6 +55,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <label for="email-login-input">Email</label>
                 </div>
                 <button type="submit" class="btn btn-success" style="width: 20%">Signup</button>
+
             </div>
         </form>
     </div>
