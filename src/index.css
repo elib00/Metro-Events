@@ -33,6 +33,7 @@ body {
     height: 100%;
     width: 30%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: aqua;
@@ -51,4 +52,19 @@ body {
     border-radius: 20px;
     border: solid 1px black; 
     background-color: blanchedalmond
+}
+
+.top-bar {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    /* align-items: center; */
+    background-color: aquamarine;
+}
+
+.events-wrapper {
+    width: 80%;
+    flex: 1;
+    width: 100%;
+    overflow-y: scroll;
 }

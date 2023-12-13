@@ -1,3 +1,7 @@
+<?php
+include("api.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +22,16 @@
                 <button type="submit" class="btn btn-success" style="width: 40%">Send Request</button>
             </form>
         </div>
-        <div class="event-tab"></div>
+        <div class="event-tab">
+            <div class="top-bar" style="position: relative">
+                <form action="logout.php" method="post"
+                style="width: 10%; height: 40%; position: absolute; top: 30%; right: 30px">
+                    <button type="submit" class="btn btn-danger" style="width: 100%; height: 100%">Logout</button>
+                </form>
+            </div>
+
+            <div class="events-wrapper"><?php echo displayEvents()?></div>
+        </div>
     </div>
 </body>
 </html>

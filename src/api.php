@@ -4,12 +4,13 @@ $reviewsJSON = "../data/reviews.json";
 $usersJSON = "../data/users.json";
 $adminJSON = "../data/admin.json";
 $requestsJSON = "../data/requests.json";
+$eventsJSON = "../data/events.json";
 
-$currentUser = null;
+// $currentUser = null;
 
-if(isset($_COOKIE["user"])){
-    $currentUser = json_decode($_COOKIE["user"], true);
-}
+// if(isset($_COOKIE["user"])){
+//     $currentUser = json_decode($_COOKIE["user"], true);
+// }
 
 function getAdminData(){
     global $adminJSON;
@@ -57,6 +58,18 @@ function getUsersData(){
     return json_decode($data, true);
 }
 
+function getEventsData(){
+    global $eventsJSON;
+
+    if(!file_exists($eventsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($eventsJSON);
+    return json_decode($data, true);
+}
+
 function getUser($username){
     $usersData = getUsersData();
     foreach($usersData as $user){
@@ -90,4 +103,10 @@ function permitLogin($user){
 
 function logoutUser(){
     unset($_COOKIE["user"]);
+    setcookie('user', '', time() - 3600, '/');
+}
+
+function displayEvents(){
+    $events = getEventsData();
+    
 }

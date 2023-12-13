@@ -9,5 +9,11 @@
         "name": "Joshua Napinas",
         "email": "joshua@gmail.com",
         "isOrganizer": false
+    },
+    {
+        "id": 3,
+        "name": "Thomas Danjo",
+        "email": "thomas@gmail.com",
+        "isOrganizer": false
     }
 ]

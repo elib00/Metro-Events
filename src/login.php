@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     <div class="main-wrapper">
-        <form style="display: flex; justify-content: center; align-items: center; width: 50%"
+        <form style="display: flex; justify-content: center; align-items: center; width: 40%"
             action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])?>" method="post">
             <div class="details-box">
                 <h1>Login</h1>
