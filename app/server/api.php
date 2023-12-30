@@ -6,12 +6,6 @@ $adminJSON = "../data/admin.json";
 $requestsJSON = "../data/requests.json";
 $eventsJSON = "../data/events.json";
 
-// $currentUser = null;
-
-// if(isset($_COOKIE["user"])){
-//     $currentUser = json_decode($_COOKIE["user"], true);
-// }
-
 function getAdminData(){
     global $adminJSON;
     
