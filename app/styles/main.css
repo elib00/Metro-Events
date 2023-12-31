@@ -34,31 +34,26 @@ body {
     width: 30%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     background-color: aqua;
+    gap: 10px;
 }
 
 .event-tab {
     height: 100%;
     width: 70% ; 
+    display: flex;
+    flex-direction: column;
     background-color: azure;
-}
-
-.request-box {
-    width: 80%;
-    height: 50%;
-    gap: 10px;
-    border-radius: 20px;
-    border: solid 1px black; 
-    background-color: blanchedalmond
 }
 
 .top-bar {
     width: 100%;
-    height: 10%;
+    height: 80px;
     display: flex;
-    /* align-items: center; */
+    justify-content: center;
+    align-items: center;
     background-color: aquamarine;
 }
 
@@ -68,3 +63,77 @@ body {
     width: 100%;
     overflow-y: scroll;
 }
+
+#create-event-form, #my-events-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: blanchedalmond;
+    height: 45%;
+    width: 80%;
+    border: solid black 1px;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.tab {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab:hover{
+    background-color: #808080;
+    cursor: pointer;
+}
+
+.tab h1:hover {
+    cursor: pointer;
+}
+
+[data-tab-content] {
+    display: none;
+}
+
+.active[data-tab-content]{
+    display: flex;
+}
+
+.content-wrapper{
+    width: 100%;
+    height: calc(100% - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px black;
+}
+
+#admin-approvals-tab {
+    height: 80%;
+    width: 90%;
+    border: solid 1px black;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    gap: 10px;
+    padding: 10px
+}
+
+.request-card {
+    height: auto;
+    width: 80%;
+    border: solid black 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+    padding: 10px;
+    margin: 10px;
+    gap: 10px;
+}
+

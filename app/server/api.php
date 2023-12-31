@@ -3,7 +3,7 @@
 $reviewsJSON = "../data/reviews.json";
 $usersJSON = "../data/users.json";
 $adminJSON = "../data/admin.json";
-$requestsJSON = "../data/requests.json";
+$organizerRequestsJSON = "../data/organizer_requests.json";
 $eventsJSON = "../data/events.json";
 
 function getAdminData(){
@@ -30,14 +30,14 @@ function getReviewsData(){
     return json_decode($data, true);
 }
 
-function getRequestsData(){
-    global $requestsJSON;
-    if (!file_exists($requestsJSON)) {
+function getOrganizerRequestsData(){
+    global $organizerRequestsJSON;
+    if (!file_exists($organizerRequestsJSON)) {
         echo "File not found";
         return [];
     }
 
-    $data = file_get_contents($requestsJSON);
+    $data = file_get_contents($organizerRequestsJSON);
     return json_decode($data, true);
 }
 
@@ -102,5 +102,14 @@ function logoutUser(){
 
 function displayEvents(){
     $events = getEventsData();
-    
 }
+
+//getting the organizer requests
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getOrganizerRequestsData" && function_exists("getOrganizerRequestsData")) {
+        $data = getOrganizerRequestsData();
+        echo json_encode($data);
+    } 
+}
+?>

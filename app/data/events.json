@@ -1,8 +1,10 @@
 [
     {
-        "title": "Basketball Tournament",
-        "date": "12/13/2023",
         "id": 1,
+        "title": "Basketball Tournament",
+        "date": "2023-12-31",
+        "time": "12:00",
+        "venue": "Cebu",
         "organizer": "Joshua Napinas"
-    }
+    }   
 ]

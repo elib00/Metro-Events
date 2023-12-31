@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     foreach($requestsArray as $request){
         if($request["name"] === $user["name"]){
             $response["error"] = "redundant_request_error";
-            echo json_encode($response, true);
+            echo json_encode($response);
             exit();
         }
     }
@@ -18,6 +18,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $requestsArray[] = $user;
     file_put_contents($requestsJSON, json_encode($requestsArray, JSON_PRETTY_PRINT));
     $response['success'] = 'Request processed successfully';
-    echo json_encode($response, true);
+    echo json_encode($response);
     exit();
 }

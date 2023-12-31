@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if(response.admin){
                         window.location.href = "../client/admin.html";
                     }else if(response.user){
-                        window.location.href = "../client/index.html";
+                        window.location.href = "../client/user.html";
                     }
                 }else{
                     if(response.user_not_found){
@@ -63,6 +63,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(response.success) {
                     window.location.href = "../client/login.html";
                 }
+            }
+        });
+    });
+
+    //creating an event
+    $("#create-event-form").on("submit", function(e){
+        e.preventDefault();
+        let formData = $(this).serialize();
+        $.ajax({
+            url: "../server/create_event.php",
+            method: "POST",
+            data: formData,
+            success: (response) => {
+                console.log(response);
+                window.location.reload();   
             }
         });
     });

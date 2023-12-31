@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Events</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr. net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script type="module" src="../scripts/user.js" defer></script>
+    <script type="module" src="../scripts/admin.js" defer></script>
+    <link rel="stylesheet" href='../styles/main.css'>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="side-tab" style="flex-direction: column; gap: 10px">
+        </div>
+        <div class="event-tab">
+            <div class="top-bar">
+                <div
+                    style="width: 80%; height: 100%; display: flex; justify-content: space-around; align-items: center; gap: 10px">
+                    <div id="events-choice" class="tab" data-tab-target="#admin-events-tab">
+                        <h1>Events</h1>
+                    </div>
+                    <div id="approvals-choice" class="tab" data-tab-target="#admin-approvals-tab">
+                        <h1>Approvals</h1>
+                    </div>
+                    <div id="requests-choice" class="tab" data-tab-target="#admin-requests-tab">
+                        <h1>Requests</h1>
+                    </div>
+                </div>
+                <div style="width: 20%; height: 100%; display: flex; justify-content: center; align-items: center">
+                    <button id="logout-btn" class="btn btn-danger" style="width: 50%; height: 50%">Logout</button>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div id="admin-events-tab" data-tab-content>Events</div>
+                <div id="admin-approvals-tab" class="active" data-tab-content></div>
+                <div id="admin-requests-tab" data-tab-content>Requests</div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
