@@ -11,7 +11,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($user == $admin[0]){
             $response["admin"] = true;
         }else{
-            $response["user"] = true;
+            if($user["isOrganizer"] == true){
+                $response["organizer"] = true;
+            }else{
+                $response["user"] = true;
+            } 
         }
     }else{
         $response["success"] = false;

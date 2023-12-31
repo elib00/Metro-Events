@@ -25,6 +25,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     file_put_contents($eventsJSON, json_encode($eventsArray, JSON_PRETTY_PRINT));
     
     $response["success"] = true;
-    echo json_encode($response  );
+    echo json_encode($response);
     exit();
 }

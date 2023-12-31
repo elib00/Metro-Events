@@ -64,7 +64,7 @@ body {
     overflow-y: scroll;
 }
 
-#create-event-form, #my-events-wrapper {
+#admin-create-event-form, #admin-events-wrapper, #create-event-form, #my-events-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
