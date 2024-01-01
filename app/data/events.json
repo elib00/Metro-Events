@@ -5,7 +5,10 @@
         "date": "2023-12-31",
         "time": "12:00",
         "venue": "Cebu",
-        "organizer": "Joshua Napinas"
+        "organizer": "Joshua Napinas",
+        "participants": [
+            "Mary Francesca"
+        ]
     },
     {
         "id": 2,
@@ -13,7 +16,8 @@
         "date": "2023-12-31",
         "time": "11:18",
         "venue": "Dalaguete, Cebu",
-        "organizer": "Joshua Napinas"
+        "organizer": "Joshua Napinas",
+        "participants": []
     },
     {
         "id": 3,
@@ -21,6 +25,16 @@
         "date": "2023-12-31",
         "time": "23:23",
         "venue": "Dalaguete, Cebu",
-        "organizer": "Joshua Napinas"
+        "organizer": "Joshua Napinas",
+        "participants": []
+    },
+    {
+        "id": 4,
+        "title": "TEST@HDAHFAD",
+        "date": "2024-01-02",
+        "time": "14:55",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "admin admin",
+        "participants": []
     }
 ]

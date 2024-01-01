@@ -5,6 +5,8 @@ $usersJSON = "../data/users.json";
 $adminJSON = "../data/admin.json";
 $organizerRequestsJSON = "../data/organizer_requests.json";
 $eventsJSON = "../data/events.json";
+$joinRequestsJSON = "../data/join_request.json";
+$participantsJSON = "../data/participants.json";
 
 function getCurrentUser(){
     return json_decode($_COOKIE["user"]);
@@ -33,6 +35,19 @@ function getReviewsData(){
     $data = file_get_contents($reviewsJSON);
     return json_decode($data, true);
 }
+
+function getParticipantsData(){
+    global $participantsJSON;
+
+    if(!file_exists($participantsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($participantsJSON);
+    return json_decode($data, true);
+}
+
 
 function getOrganizerRequestsData(){
     global $organizerRequestsJSON;
@@ -65,6 +80,18 @@ function getEventsData(){
     }
 
     $data = file_get_contents($eventsJSON);
+    return json_decode($data, true);
+}
+
+function getJoinRequestsData(){
+    global $joinRequestsJSON;
+
+    if(!file_exists($joinRequestsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($joinRequestsJSON);
     return json_decode($data, true);
 }
 
@@ -141,6 +168,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
     $action = $_POST["action"];
     if ($action === "getCurrentUser" && function_exists("getCurrentUser")) {
         $data = getCurrentUser();
+        echo json_encode($data);
+    } 
+}
+
+//get join requests data
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getJoinRequestsData" && function_exists("getJoinRequestsData")) {
+        $data = getJoinRequestsData();
         echo json_encode($data);
     } 
 }

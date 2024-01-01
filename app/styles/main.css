@@ -111,7 +111,7 @@ body {
     border: solid 1px black;
 }
 
-#admin-approvals-tab, #admin-events-tab, #admin-request-tab {
+#admin-approvals-tab, #admin-events-tab, #admin-requests-tab {
     height: 80%;
     width: 90%;
     border: solid 1px black;
@@ -150,6 +150,7 @@ body {
     margin: 10px;
     gap: 10px;
 }
+
 .review-wrapper {
     display: flex; 
     flex-direction: column;
@@ -159,6 +160,20 @@ body {
     width: 100%; height: auto; 
     min-height: 100px; 
     position: relative;
+}
+
+.join-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    height: auto;
+    min-height: 200px;
+    border: solid black 1px;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: darkseagreen;
 }
 
 

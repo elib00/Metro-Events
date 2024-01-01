@@ -22,7 +22,7 @@ export function getEvents() {
         },
         success: (response) => {
             response = JSON.parse(response);
-            console.log(response);
+            // console.log(response);
 
             $.ajax({
                 url: "../server/api.php",
@@ -32,12 +32,77 @@ export function getEvents() {
                 },
                 success: (reviewsData) => {
                     reviewsData = JSON.parse(reviewsData);
-                    console.log(reviewsData);
+                    // console.log(reviewsData);
                     generateEventsContent(response, reviewsData);
                 }
             });
         }
     });
+}
+
+export function getJoinRequests(){
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getJoinRequestsData"
+        },
+        success: (response) => {
+            response = JSON.parse(response);
+            console.log(response);
+            generateJoinRequestsContent(response);
+        }
+    });
+}
+
+function generateJoinRequestsContent(joinRequestsData){
+    const joinRequestsTab = document.getElementById("admin-requests-tab");
+    let data = joinRequestsData;
+
+    for(let i = data.length - 1; i >= 0; i--){
+        let output = ``;
+        let newJoinCard = document.createElement("div");
+        newJoinCard.className = "join-card";
+
+        output += `
+            <h3>Title: ${data[i].eventTitle}</h3>
+            <h4>Name: ${data[i].name}</h4>
+            <h4>Email: ${data[i].email}</h4>
+            <div style="display: flex; justify-content: space-around; width: 100%">
+                <button data-trigger-decline class="btn btn-danger">Decline</button>
+                <button data-trigger-accept class="btn btn-success">Accept</button>
+            </div>
+        `;
+
+        newJoinCard.innerHTML = output;
+        addAcceptJoinRequestFunctionality(newJoinCard, data[i]);
+        joinRequestsTab.appendChild(newJoinCard);
+    }
+}
+
+function addAcceptJoinRequestFunctionality(element, joinRequestData) {
+    element.addEventListener("click", function(event) {
+        acceptJoinRequest(event, joinRequestData)
+    });
+}
+
+function acceptJoinRequest(event, joinRequestData){
+    const triggerElement = event.target;
+    if(triggerElement.tagName === "BUTTON" && triggerElement.dataset.triggerAccept !== undefined){
+        const parentToRemove = triggerElement.closest(".join-card");
+        parentToRemove.remove();
+
+        //add the data to the participants json
+        $.ajax({
+            url: "../server/add_participant.php",
+            method: "POST",
+            data: joinRequestData,
+            success: (response) => {
+                response = JSON.parse(response);
+                console.log(response);
+            }
+        });
+    }
 }
 
 function generateEventsContent(data, reviews){
@@ -75,11 +140,15 @@ function generateEventsContent(data, reviews){
 
         output += `</div>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="" id="floatingTextarea"
+                <textarea class="form-control" placeholder=""
                     style="resize: none; height: 100px"></textarea>
-                <label for="floatingTextarea">Interact with the attendees...</label>
+                <label >Interact with the attendees...</label>
             </div>
-            <button class="btn btn-success" data-trigger-submit>Submit Review</button>
+            <div style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                <button class="btn btn-warning" data-trigger-join>Join Event</button>
+                <button class="btn btn-success" data-trigger-submit>Submit Review</button>
+                <button class="btn btn-danger" data-trigger-cancel>Cancel Event</button>
+            </div>
         `;
 
         newEventCard.innerHTML = output;
@@ -127,9 +196,12 @@ function addCreateReviewFunctionality(element, data){
 function createReview(event, data){
     const triggerElement = event.target;
     if(triggerElement.tagName === "BUTTON" && triggerElement.dataset.triggerSubmit !== undefined){
-        let reviewElement = triggerElement.previousElementSibling.firstElementChild;
-        let reviewElementContent = reviewElement.value;
-        reviewElement.value = "";
+        let parentElement = triggerElement.closest(".event-card");
+        let reviewsContent = parentElement.querySelector(".reviews-content");
+
+        let targetTextArea = parentElement.querySelector(".form-control");
+        let targetTextAreaContent = targetTextArea.value;
+        targetTextArea.value = "";
 
         $.ajax({
             url: "../server/api.php",
@@ -138,8 +210,6 @@ function createReview(event, data){
                 action: "getCurrentUser",
             },
             success: (currentUserData) => {
-                let parentElement = triggerElement.closest(".event-card");
-                let reviewsContent = parentElement.querySelector(".reviews-content");
                 let output = ``;
                         
                 currentUserData = JSON.parse(currentUserData);
@@ -148,7 +218,7 @@ function createReview(event, data){
                 let obj = {
                     "eventID": data.id,
                     "name": currentUserData.name,
-                    "body": reviewElementContent 
+                    "body": targetTextAreaContent
                 }
                 
                 $.ajax({
@@ -160,31 +230,21 @@ function createReview(event, data){
                         console.log(newReview);
                         
                         output += 
-                        `<div class="review-wrapper">
+                        `
                             <h3>${newReview.name}</h3>
                             <p>${newReview.body}</p>
                             <button data-review-id="${newReview.id}" class="btn btn-danger delete" style="position: absolute; top: 0; right: 0;">x</button>
-                        </div>`;
+                        `;
+
+                        let dummy = document.createElement("div");
+                        dummy.innerHTML = output;
 
                         let tempContainer = document.createElement("div");
                         tempContainer.className = "review-wrapper";
-                        tempContainer.innerHTML = output;
+                        tempContainer.appendChild(dummy);
                         reviewsContent.appendChild(tempContainer);
-                        reviewElement.value = "";
 
-                        tempContainer.addEventListener("click", function(e) {
-                            tempContainer.remove();
-                            $.ajax({
-                                url: "../server/delete_review.php",
-                                method: "POST",
-                                data: newReview,
-                                success: (response) => {
-                                    response = JSON.parse(response);
-                                    console.log(response);
-                                }
-                            });
-                        });
-
+                        addDeleteReviewFunctionality(dummy, newReview);
                     }
                 });
                     

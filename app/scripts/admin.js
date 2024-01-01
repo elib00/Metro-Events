@@ -1,5 +1,6 @@
 import { getPendingApprovals } from "./utility.js";
 import { getEvents } from "./utility.js";
+import { getJoinRequests } from "./utility.js";
 
 document.addEventListener('DOMContentLoaded', () => {
         //make ajax call for events generation heree...
@@ -23,4 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
         const approvalsTab = document.getElementById("approvals-choice");
         const requestsTab = document.getElementById("requests-choice");
         approvalsTab.addEventListener("click", getPendingApprovals,  {once : true});
+        requestsTab.addEventListener("click", getJoinRequests, {once : true});
 });
