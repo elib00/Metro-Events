@@ -6,6 +6,10 @@ $adminJSON = "../data/admin.json";
 $organizerRequestsJSON = "../data/organizer_requests.json";
 $eventsJSON = "../data/events.json";
 
+function getCurrentUser(){
+    return json_decode($_COOKIE["user"]);
+}
+
 function getAdminData(){
     global $adminJSON;
     
@@ -69,7 +73,7 @@ function getUser($username){
     foreach($usersData as $user){
         if($user["name"] == $username){
             return $user;
-        }
+        }   
     }
 
     $adminData = getAdminData();
@@ -112,4 +116,33 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
         echo json_encode($data);
     } 
 }
+
+//getting the events
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getEventsData" && function_exists("getEventsData")) {
+        $data = getEventsData();
+        echo json_encode($data);
+    } 
+}
+
+//getting the reviews
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getReviewsData" && function_exists("getReviewsData")) {
+        $data = getReviewsData();
+        echo json_encode($data);
+    } 
+}
+
+
+//get current user data
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getCurrentUser" && function_exists("getCurrentUser")) {
+        $data = getCurrentUser();
+        echo json_encode($data);
+    } 
+}
+
 ?>

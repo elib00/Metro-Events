@@ -1,8 +1,9 @@
 import { getPendingApprovals } from "./utility.js";
+import { getEvents } from "./utility.js";
 
 document.addEventListener('DOMContentLoaded', () => {
         //make ajax call for events generation heree...
-
+        getEvents();
 
         const tabs = document.querySelectorAll("[data-tab-target]");
         const contents = document.querySelectorAll("[data-tab-content]");
@@ -19,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        const eventTab = document.getElementById("events-choice");
         const approvalsTab = document.getElementById("approvals-choice");
         const requestsTab = document.getElementById("requests-choice");
         approvalsTab.addEventListener("click", getPendingApprovals,  {once : true});

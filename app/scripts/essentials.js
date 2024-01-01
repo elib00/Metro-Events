@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }else{
                     if(response.user_not_found){
+                        alert("Please use a valid account");
                         window.location.href = "../client/login.html";
                     }else if(response.user_still_active){
                         window.location.href = "../client/index.html";  
@@ -97,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
    
     
 });

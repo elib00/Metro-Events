@@ -111,7 +111,7 @@ body {
     border: solid 1px black;
 }
 
-#admin-approvals-tab {
+#admin-approvals-tab, #admin-events-tab, #admin-request-tab {
     height: 80%;
     width: 90%;
     border: solid 1px black;
@@ -136,4 +136,29 @@ body {
     margin: 10px;
     gap: 10px;
 }
+
+.event-card {
+    height: auto;
+    width: 80%;
+    border: solid black 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+    padding: 10px;
+    margin: 10px;
+    gap: 10px;
+}
+.review-wrapper {
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    border: solid black 1px; 
+    width: 100%; height: auto; 
+    min-height: 100px; 
+    position: relative;
+}
+
 

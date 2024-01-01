@@ -20,6 +20,11 @@
 </head>
 
 <body>
+    <script>
+        if (!document.cookie.includes("user=")) {
+            window.location.href = "login.html";
+        }
+    </script>
     <div class="main-wrapper">
         <div class="side-tab" style="flex-direction: column; gap: 10px">
             <form id="create-event-form" method="post">

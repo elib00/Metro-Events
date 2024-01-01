@@ -21,6 +21,11 @@
 </head>
 
 <body>
+    <script>
+        if (!document.cookie.includes("user=")) {
+            window.location.href = "login.html";
+        }
+    </script>
     <div class="main-wrapper">
         <div class="side-tab" style="flex-direction: column; gap: 10px">
             <form id="admin-create-event-form" method="post">
@@ -76,8 +81,8 @@
                 </div>
             </div>
             <div class="content-wrapper">
-                <div id="admin-events-tab" data-tab-content>Events</div>
-                <div id="admin-approvals-tab" class="active" data-tab-content></div>
+                <div id="admin-events-tab" class="active" data-tab-content></div>
+                <div id="admin-approvals-tab" data-tab-content></div>
                 <div id="admin-requests-tab" data-tab-content>Requests</div>
             </div>
             <div>

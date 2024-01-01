@@ -5,7 +5,7 @@ $response = array();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $user = json_decode($_COOKIE["user"], true);
-    $requestsArray = getRequestsData();
+    $requestsArray = getOrganizerRequestsData();
 
     foreach($requestsArray as $request){
         if($request["name"] === $user["name"]){
@@ -16,8 +16,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     $requestsArray[] = $user;
-    file_put_contents($requestsJSON, json_encode($requestsArray, JSON_PRETTY_PRINT));
+    file_put_contents($organizerRequestsJSON, json_encode($requestsArray, JSON_PRETTY_PRINT));
     $response['success'] = 'Request processed successfully';
-    echo json_encode($response);
+    echo json_encode($response);    
     exit();
 }
