@@ -26,7 +26,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     //adding the data or new participant to the participants json
-    // $participantsData = getParticipantsData();
     $eventsData = getEventsData();
     foreach($eventsData as &$event){
         if($event["title"] === $eventTitle && $event["id"] == $eventID){
@@ -37,11 +36,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
+    $participantsData = getParticipantsData();
     $participantsData[] = $newParticipant;
+
+    //adding to the approved requests
+    $approvedRequests = getApprovedJoinRequests();
+    $approvedRequests[] = $newParticipant;
+  
 
     file_put_contents($joinRequestsJSON, json_encode(array_values($joinRequestsData), JSON_PRETTY_PRINT));
     file_put_contents($participantsJSON, json_encode($participantsData, JSON_PRETTY_PRINT));
     file_put_contents($eventsJSON, json_encode($eventsData, JSON_PRETTY_PRINT));
+    file_put_contents($approvedJoinRequestsJSON, json_encode($approvedRequests, JSON_PRETTY_PRINT));
 
     $response = [
         "success" => true

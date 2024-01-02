@@ -17,7 +17,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         "date" =>$eventDate,
         "time" =>$eventTime,
         "venue" => $eventVenue,
-        "organizer" => json_decode($_COOKIE["user"], true)["name"]
+        "organizer" => json_decode($_COOKIE["user"], true)["name"],
+        "participants" => []
     ];
 
 

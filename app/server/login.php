@@ -2,11 +2,18 @@
 include("api.php");
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $response = array();
-    $user = getUser(htmlspecialchars($_POST["firstname-login-input"] . " " . $_POST["lastname-login-input"]));
+
+    $pendingUser = [
+        "name" => htmlspecialchars($_POST["firstname-login-input"] . " " . $_POST["lastname-login-input"]),
+        "email" => htmlspecialchars($_POST["email-login-input"]),
+        "password" => htmlspecialchars($_POST["password-login-input"])
+    ];
+
+    $user = getUser($pendingUser);
     if($user){
         permitLogin($user);
         setcookie("user", json_encode($user, JSON_PRETTY_PRINT), time() + 3600, "/");
-        $response["success"] = true;
+        $response["success"] = true;    
         $admin = getAdminData();    
         if($user == $admin[0]){
             $response["admin"] = true;
@@ -23,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 
-echo json_encode($response, true);
+echo json_encode($response);
 ?>
 
  

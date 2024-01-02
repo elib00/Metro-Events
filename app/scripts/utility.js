@@ -1,4 +1,4 @@
-export function getPendingApprovals() {
+export function getPendingApprovals(type) {
     $.ajax({
         url: "../server/api.php",
         method: "POST",
@@ -8,12 +8,12 @@ export function getPendingApprovals() {
         success: (response) => {
             response = JSON.parse(response);
             console.log(response);
-            generateOrganizerApprovalContent(response);
+            generateOrganizerApprovalContent(type, response);
         }
     });
 }
 
-export function getEvents() {
+export function getEvents(type) {
     $.ajax({
         url: "../server/api.php",
         method: "POST",
@@ -33,14 +33,15 @@ export function getEvents() {
                 success: (reviewsData) => {
                     reviewsData = JSON.parse(reviewsData);
                     // console.log(reviewsData);
-                    generateEventsContent(response, reviewsData);
+                    generateEventsContent(type, response, reviewsData);
+                    getApprovedJoinRequestsNotifications();
                 }
             });
         }
     });
 }
 
-export function getJoinRequests(){
+export function getJoinRequests(type){
     $.ajax({
         url: "../server/api.php",
         method: "POST",
@@ -50,33 +51,150 @@ export function getJoinRequests(){
         success: (response) => {
             response = JSON.parse(response);
             console.log(response);
-            generateJoinRequestsContent(response);
+            generateJoinRequestsContent(type, response);
         }
     });
 }
 
-function generateJoinRequestsContent(joinRequestsData){
-    const joinRequestsTab = document.getElementById("admin-requests-tab");
+export function displayMyEvents(type){
+    const myEventsWrapper = document.getElementById(`${type}-events-wrapper`);
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getCurrentUser"
+        },
+        success: (response) => {
+            let currentUser = JSON.parse(response);
+            
+            $.ajax({
+                url: "../server/api.php",
+                method: "POST",
+                data: {
+                    action: "getEventsData"
+                },
+                success: (response) => {
+                    let eventsData = JSON.parse(response);
+                    console.log(eventsData);
+
+                    let data = eventsData;
+                    for(let i = data.length - 1; i >= 0; i--){
+                        let output = ``;
+                        let newMyEventCard = document.createElement("div");
+                        newMyEventCard.className = "my-event-card";
+
+                        if(data[i].organizer === currentUser.name){
+                            output +=  `
+                                <h5 style="text-align: center; margin: 0px">Title: ${data[i].title}</h5>
+                            `
+
+                            newMyEventCard.innerHTML = output;
+                            myEventsWrapper.appendChild(newMyEventCard);
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+export function getApprovedJoinRequestsNotifications(){
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getCurrentUser"
+        },
+        success: (response) => {
+            let currentUser = JSON.parse(response);
+            console.log(currentUser);
+
+            //get the approved requests
+            $.ajax({
+                url: "../server/api.php",
+                method: "POST",
+                data: {
+                    action: "getApprovedJoinRequests"
+                },
+                success: (response) => {
+                    let approvedJoinRequests = JSON.parse(response);
+                    console.log(approvedJoinRequests);
+
+                    for(let i = 0; i < approvedJoinRequests.length; i++){
+                        if(approvedJoinRequests[i].name === currentUser.name){
+                            alert(`You have been accepted for this join request: ${approvedJoinRequests[i].eventTitle}`);
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+function generateJoinRequestsContent(type, joinRequestsData){
+    const joinRequestsTab = document.getElementById(`${type}-requests-tab`);
+    joinRequestsTab.innerHTML = "";
     let data = joinRequestsData;
 
-    for(let i = data.length - 1; i >= 0; i--){
-        let output = ``;
-        let newJoinCard = document.createElement("div");
-        newJoinCard.className = "join-card";
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getCurrentUser"
+        },
+        success: (response) => {
+            let currentUser = JSON.parse(response);
+            console.log(currentUser);
 
-        output += `
-            <h3>Title: ${data[i].eventTitle}</h3>
-            <h4>Name: ${data[i].name}</h4>
-            <h4>Email: ${data[i].email}</h4>
-            <div style="display: flex; justify-content: space-around; width: 100%">
-                <button data-trigger-decline class="btn btn-danger">Decline</button>
-                <button data-trigger-accept class="btn btn-success">Accept</button>
-            </div>
-        `;
+            for(let i = data.length - 1; i >= 0; i--){
+                let output = ``;
+                let newJoinCard = document.createElement("div");
+                newJoinCard.className = "join-card";
 
-        newJoinCard.innerHTML = output;
-        addAcceptJoinRequestFunctionality(newJoinCard, data[i]);
-        joinRequestsTab.appendChild(newJoinCard);
+                if(currentUser.name !==  data[i].name || currentUser.name === "admin admin"){
+                    output += `
+                        <h1 style="color:  #FFFFF0">Event: ${data[i].eventTitle}</h1>
+                        <h5 style="color: #FFFFF0;">Name: ${data[i].name}</h5>
+                        <h5 style="color: #FFFFF0;">Email: ${data[i].email}</h5>
+                        <div style="display: flex; justify-content: space-around; width: 100%; margin-top: 20px">
+                            <button data-trigger-decline class="btn btn-danger">Decline</button>
+                            <button data-trigger-accept class="btn btn-success">Accept</button>
+                        </div>
+                    `;
+
+                    newJoinCard.innerHTML = output;
+                    addAcceptJoinRequestFunctionality(newJoinCard, data[i]);
+                    addDeclineJoinRequestFunctionality(newJoinCard, data[i]);
+                    joinRequestsTab.appendChild(newJoinCard);
+                }
+            }
+        
+        }
+    });
+}
+
+function addDeclineJoinRequestFunctionality(element, joinRequestData) {
+    element.addEventListener("click", function(event) {
+        declineJoinRequest(event, joinRequestData);
+    });
+}
+
+function declineJoinRequest(event, joinRequestData){
+    const triggerElement = event.target;
+    if(triggerElement.tagName === "BUTTON" && triggerElement.dataset.triggerDecline !== undefined){
+        const parentToRemove = triggerElement.closest(".join-card");
+        parentToRemove.remove();
+
+        //add the data to the participants json
+        $.ajax({
+            url: "../server/add_participant.php",
+            method: "POST",
+            data: joinRequestData,
+            success: (response) => {
+                response = JSON.parse(response);
+                console.log(response);
+            }
+        });
     }
 }
 
@@ -105,57 +223,174 @@ function acceptJoinRequest(event, joinRequestData){
     }
 }
 
-function generateEventsContent(data, reviews){
-    const eventsTab = document.getElementById("admin-events-tab");
+function generateEventsContent(type, data, reviews){
+    const eventsTab = document.getElementById(`${type}-events-tab`);
 
-    for(let i = data.length - 1; i >= 0; i--){
-        let output = ``;
-        let newEventCard = document.createElement("div");
-        newEventCard.className = "event-card";
-        newEventCard.setAttribute("data-event-id", data[i].id);
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getCurrentUser"
+        },
+        success: (response) => {
+            const currentUser = JSON.parse(response);
 
-        output += `
-            <h1>Title: ${data[i].title}</h1>
-            <h3>Date: ${data[i].date}</h3>
-            <h4>Time: ${data[i].time}</h4>
-            <h4>Venue: ${data[i].venue}</h4>
-            <h5>Organizer: ${data[i].organizer}</h5>
-            <div
-                class="reviews-content" style="width: 100%; height: 300px; display: flex; flex-direction: column; align-items: center;
-                border: solid black 1px; border-radius: 10px; padding: 10px; overflow-y: auto; max-height: 200px; gap: 10px">
-                <h6>Reviews</h6>`;
-            
-            for(let j = reviews.length - 1; j >= 0; j--){
-                if(reviews[j].eventID === data[i].id){
-                    //console.log("nasulod diri");
-                    output += 
-                    `<div class="review-wrapper">
-                        <h3>${reviews[j].name}</h3>
-                        <p>${reviews[j].body}</p>
-                        <button data-review-id="${reviews[j].id}" class="btn btn-danger delete" style="position: absolute; top: 0; right: 0;">x</button>
-                    </div>`;
-                    addDeleteReviewFunctionality(newEventCard, reviews[j]);
+            for(let i = data.length - 1; i >= 0; i--){
+                let output = ``;
+                let newEventCard = document.createElement("div");
+                newEventCard.className = "event-card";
+                newEventCard.setAttribute("data-event-id", data[i].id);
+        
+                output += `
+                    <button data-upvote style="position: absolute; top: 20px; right: 20px;" class="btn btn-success">Upvote</button>
+                    <button value="0" class="votes btn btn-success" style="position: absolute; top: 20px; right: 120px; 
+                    background-color: yellow; border: solid white 1px; color: black; font-weight: bold">0</button>
+                    <h1>Title: ${data[i].title}</h1>
+                    <h5>Date: ${data[i].date}</h5>
+                    <h5>Time: ${data[i].time}</h5>
+                    <h5>Venue: ${data[i].venue}</h5>
+                    <h5>Organizer: ${data[i].organizer}</h5>
+                    <div
+                        class="reviews-content" style="width: 100%; height: 300px; display: flex; flex-direction: column; align-items: center;
+                        border: solid black 1px; border-radius: 10px; padding: 10px; overflow-y: auto; min-height: 200px; gap: 10px;
+                        background-color: #CCC;">
+                        <h4>Reviews</h4>`;
+                    
+                    for(let j = reviews.length - 1; j >= 0; j--){
+                        if(reviews[j].eventID === data[i].id){
+                            //console.log("nasulod diri");
+                            output += 
+                            `<div class="review-wrapper">`;
+
+                            if(currentUser.name === reviews[j].name){
+                                output += `<h3><span style="color: red">You</span>: ${reviews[j].name}</h3>`;
+                            }else{
+                                output += `<h3>${reviews[j].name}</h3>`;
+                            }
+                                
+                            output += `
+                                <p>${reviews[j].body}</p>`
+                            
+                                if(reviews[j].name === currentUser.name || currentUser.isAdmin){
+                                    output += ` <button data-review-id="${reviews[j].id}" class="btn btn-danger delete" style="position: absolute; top: 8px; right: 8px">x</button>`;
+                                }
+
+                        output += `</div>`;
+                            addDeleteReviewFunctionality(newEventCard, reviews[j]);
+                        }
+                    }
+        
+                output += `</div>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder=""
+                            style="resize: none; height: 100px"></textarea>
+                        <label >Interact with the attendees...</label>
+                    </div>
+                    <div style="width: 100%; display: flex; justify-content: space-around; align-items: center">`;
+                    
+                    if(data[i].organizer !== currentUser.name){
+                        output +=  `<button class="btn btn-warning" data-trigger-join>Join Event</button>`;
+                        addJoinEventFunctionality(newEventCard, data[i], currentUser);
+                    }
+                       
+                output += `<button class="btn btn-success" data-trigger-submit>Submit Review</button>`
+                    
+                if(currentUser.name === data[i].organizer || currentUser.isAdmin){
+                    output += `<button class="btn btn-danger" data-trigger-cancel>Cancel Event</button>`;
+                    addCancelEventFunctionality(newEventCard, data[i]);
                 }
+                 
+                    
+                output += `</div>`;
+        
+                newEventCard.innerHTML = output;
+                addCreateReviewFunctionality(newEventCard, data[i])
+                eventsTab.appendChild(newEventCard);
+                addUpvoteFunctionality(newEventCard, data[i]);
             }
+        }
+    });
+}
 
-        output += `</div>
-            <div class="form-floating">
-                <textarea class="form-control" placeholder=""
-                    style="resize: none; height: 100px"></textarea>
-                <label >Interact with the attendees...</label>
-            </div>
-            <div style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                <button class="btn btn-warning" data-trigger-join>Join Event</button>
-                <button class="btn btn-success" data-trigger-submit>Submit Review</button>
-                <button class="btn btn-danger" data-trigger-cancel>Cancel Event</button>
-            </div>
-        `;
+function addUpvoteFunctionality(element, data){
+    element.addEventListener("click", function(event){
+        upvoteEvent(event, data);
+    });
+}
 
-        newEventCard.innerHTML = output;
-        addCreateReviewFunctionality(newEventCard, data[i]); 
-        eventsTab.appendChild(newEventCard);
+function upvoteEvent(event, data){
+    const triggerElement = event.target;
+    if(triggerElement.tagName === "BUTTON" && triggerElement.dataset.upvote !== undefined){
+        let parentElement = triggerElement.closest(".event-card");
+        let upvoteElement = parentElement.querySelector(".votes");
+        let voteCount = parseInt(upvoteElement.value);
+        upvoteElement.value = voteCount + 1;
+        upvoteElement.textContent = voteCount + 1;
     }
 }
+
+function addCancelEventFunctionality(element, data){
+    element.addEventListener("click", function(event){
+        cancelEvent(event, data);
+    });
+}
+
+function cancelEvent(event, data){
+    const triggerElement = event.target;
+    if(triggerElement.tagName === "BUTTON" && triggerElement.dataset.triggerCancel !== undefined){
+        let cardToRemove = triggerElement.closest(".event-card");
+        cardToRemove.remove();
+
+        $.ajax({
+            url: "../server/cancel_event.php",
+            method: "POST",
+            data: data,
+            success: (response) => {
+                response = JSON.parse(response);
+                console.log(response);
+            }
+        });
+    }
+}
+
+function addJoinEventFunctionality(element, data, currentUser) {
+    element.addEventListener("click", function(event){
+        joinEvent(event, data, currentUser);
+    });
+}
+
+function joinEvent(event, data, currentUser){
+    const triggerElement = event.target;
+    if(triggerElement.tagName === "BUTTON" && triggerElement.dataset.triggerJoin !== undefined){
+        let obj = {
+            "title": data.title,
+            "eventID": data.id,
+            "name": currentUser.name,
+            "email": currentUser.email
+        }
+
+        $.ajax({
+            url: "../server/join_event.php",
+            method: "POST",
+            data: obj,
+            success: (response) => {
+                response = JSON.parse(response);
+                console.log(response);
+                if(response.success){
+                    alert("Join request sent successfully!");
+                }else{
+                    if(response.redundant_request){
+                        alert("Request has already been sent. Please wait for approval.");
+                    }else if(response.is_approved){
+                        alert("Request has already been approved. Have fun!");
+                    }
+                }
+              
+            }
+        });
+    }
+}
+
 
 function addDeleteReviewFunctionality(element, data){
     element.addEventListener("click", function(e){
@@ -228,12 +463,17 @@ function createReview(event, data){
                     success: (newReview) => {
                         newReview = JSON.parse(newReview);
                         console.log(newReview);
-                        
+
+                        if(currentUserData.name === newReview.name){
+                            output += `<h3>You: ${newReview.name}</h3>`;
+                        }else{
+                            output += `<h3>${newReview.name}</h3>`;
+                        }
+
                         output += 
-                        `
-                            <h3>${newReview.name}</h3>
+                        `  
                             <p>${newReview.body}</p>
-                            <button data-review-id="${newReview.id}" class="btn btn-danger delete" style="position: absolute; top: 0; right: 0;">x</button>
+                            <button data-review-id="${newReview.id}" class="btn btn-danger delete" style="position: absolute; top: 8px; right: 8px;">x</button>
                         `;
 
                         let dummy = document.createElement("div");
@@ -253,8 +493,9 @@ function createReview(event, data){
     }
 }
 
-function generateOrganizerApprovalContent(data){
-    const adminTab = document.getElementById("admin-approvals-tab");
+function generateOrganizerApprovalContent(type, data){
+    const adminTab = document.getElementById(`${type}-approvals-tab`);
+    adminTab.innerHTML = "";
 
     for(let i = data.length - 1; i >= 0; i--){
         let output = ``;    
@@ -264,7 +505,6 @@ function generateOrganizerApprovalContent(data){
         output += `
             <h1>Name: ${data[i].name}</h1>
             <h3>Email: ${data[i].email}</h3>
-            <p>Testimony: Testttt....</p>
             <div
                 style="display: flex; justify-content: center; align-items: center; width: 100% ; gap: 10px">
                 <button class="btn btn-success approve" style="flex: 1">Approve</button>

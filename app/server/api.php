@@ -7,6 +7,8 @@ $organizerRequestsJSON = "../data/organizer_requests.json";
 $eventsJSON = "../data/events.json";
 $joinRequestsJSON = "../data/join_request.json";
 $participantsJSON = "../data/participants.json";
+$approvedJoinRequestsJSON = "../data/approved_join_requests.json";
+$notificationsJSON = "../data/notifications.json";
 
 function getCurrentUser(){
     return json_decode($_COOKIE["user"]);
@@ -33,6 +35,30 @@ function getReviewsData(){
     }
 
     $data = file_get_contents($reviewsJSON);
+    return json_decode($data, true);
+}
+
+function getNotificationsData(){
+    global $notificationsJSON;
+
+    if(!file_exists($notificationsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($notificationsJSON);
+    return json_decode($data, true);
+}
+
+function getApprovedJoinRequests(){
+    global $approvedJoinRequestsJSON;
+
+    if(!file_exists($approvedJoinRequestsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($approvedJoinRequestsJSON);
     return json_decode($data, true);
 }
 
@@ -95,17 +121,19 @@ function getJoinRequestsData(){
     return json_decode($data, true);
 }
 
-function getUser($username){
+function getUser($pendingUser){
     $usersData = getUsersData();
     foreach($usersData as $user){
-        if($user["name"] == $username){
+        if($user["name"] == $pendingUser["name"] && $user["password"] == $pendingUser["password"]
+        && $user["email"] == $pendingUser["email"]){
             return $user;
         }   
     }
 
     $adminData = getAdminData();
-    if($adminData[0]["name"] == $username){
-        return $adminData[0];
+    if($adminData[0]["name"] == $pendingUser["name"] && $adminData[0]["password"] == $pendingUser["password"]
+        && $adminData[0]["email"] == $pendingUser["email"]){
+            return $adminData[0];
     }
     
     return null;
@@ -177,6 +205,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
     $action = $_POST["action"];
     if ($action === "getJoinRequestsData" && function_exists("getJoinRequestsData")) {
         $data = getJoinRequestsData();
+        echo json_encode($data);
+    } 
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getApprovedJoinRequests" && function_exists("getApprovedJoinRequests")) {
+        $data = getApprovedJoinRequests();
         echo json_encode($data);
     } 
 }

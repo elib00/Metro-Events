@@ -59,21 +59,21 @@
                 <button type="submit" class="btn btn-success">Create Event</button>
             </form>
             <div id="admin-events-wrapper">
-                <h1>My Events</h1>
+                <h1 style="padding: 10px; margin: 10px">My Events</h1>
             </div>
         </div>
         <div class="event-tab">
             <div class="top-bar">
                 <div
-                    style="width: 80%; height: 100%; display: flex; justify-content: space-around; align-items: center; gap: 10px">
-                    <div id="events-choice" class="tab" data-tab-target="#admin-events-tab">
-                        <h1>Events</h1>
+                    style="width: 80%; height: 100%; display: flex; justify-content: space-around; align-items: center  ">
+                    <div id="events-choice" class="tab active" data-tab-target="#admin-events-tab">
+                        <h1 style="font-weight: bold">Events</h1>
                     </div>
                     <div id="approvals-choice" class="tab" data-tab-target="#admin-approvals-tab">
-                        <h1>Approvals</h1>
+                        <h1 style="font-weight: bold">Approvals</h1>
                     </div>
                     <div id="requests-choice" class="tab" data-tab-target="#admin-requests-tab">
-                        <h1>Requests</h1>
+                        <h1 style="font-weight: bold">Requests</h1>
                     </div>
                 </div>
                 <div style="width: 20%; height: 100%; display: flex; justify-content: center; align-items: center">
@@ -81,9 +81,9 @@
                 </div>
             </div>
             <div class="content-wrapper">
-                <div id="admin-events-tab" data-tab-content></div>
+                <div id="admin-events-tab" class="active" data-tab-content></div>
                 <div id="admin-approvals-tab" data-tab-content></div>
-                <div id="admin-requests-tab" class="active" data-tab-content></div>
+                <div id="admin-requests-tab" data-tab-content></div>
             </div>
         </div>
         <div>

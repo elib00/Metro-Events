@@ -7,34 +7,74 @@
         "venue": "Cebu",
         "organizer": "Joshua Napinas",
         "participants": [
-            "Mary Francesca"
+            "admin admin"
         ]
     },
     {
-        "id": 2,
-        "title": "hahanewyear@hfhdaf",
-        "date": "2023-12-31",
-        "time": "11:18",
-        "venue": "Dalaguete, Cebu",
-        "organizer": "Joshua Napinas",
-        "participants": []
-    },
-    {
-        "id": 3,
-        "title": "mishua naa",
-        "date": "2023-12-31",
-        "time": "23:23",
-        "venue": "Dalaguete, Cebu",
-        "organizer": "Joshua Napinas",
-        "participants": []
-    },
-    {
         "id": 4,
-        "title": "TEST@HDAHFAD",
+        "title": "New Year Celebration",
         "date": "2024-01-02",
         "time": "14:55",
         "venue": "Dalaguete, Cebu",
         "organizer": "admin admin",
+        "participants": [
+            "Joshua Napinas"
+        ]
+    },
+    {
+        "id": 5,
+        "title": "Birthday Party",
+        "date": "2024-01-02",
+        "time": "19:54",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "Joshua Napinas",
+        "participants": []
+    },
+    {
+        "id": 6,
+        "title": "Annual Meeting",
+        "date": "2024-01-02",
+        "time": "07:55",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "Joshua Napinas",
+        "participants": []
+    },
+    {
+        "id": 7,
+        "title": "Environment Drive",
+        "date": "2024-01-19",
+        "time": "19:55",
+        "venue": "",
+        "organizer": "Joshua Napinas",
+        "participants": []
+    },
+    {
+        "id": 8,
+        "title": "Wedding",
+        "date": "2024-01-05",
+        "time": "11:00",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "Joshua Napinas",
+        "participants": []
+    },
+    {
+        "id": 9,
+        "title": "Badminton Tryouts",
+        "date": "2024-01-02",
+        "time": "20:05",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "admin admin",
+        "participants": [
+            "Joshua Napinas"
+        ]
+    },
+    {
+        "id": 10,
+        "title": "Test",
+        "date": "2024-01-02",
+        "time": "10:48",
+        "venue": "Test",
+        "organizer": "Joshua Napinas",
         "participants": []
     }
 ]

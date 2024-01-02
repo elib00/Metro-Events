@@ -15,7 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
-    <script src="../scripts/essentials.js" defer></script>
+    <script type="module" src="../scripts/essentials.js" defer></script>
+    <script type="module" src="../scripts/organizer.js" defer></script>
     <link rel='stylesheet' href='../styles/main.css'>
 </head>
 
@@ -57,17 +58,29 @@
                 </div>
                 <button type="submit" class="btn btn-success">Create Event</button>
             </form>
-            <div id="my-events-wrapper">
-                <h1>My Events</h1>
+            <div id="organizer-events-wrapper">
+                <h1 style="padding: 10px; margin: 10px">My Events</h1>
             </div>
         </div>
         <div class="event-tab">
-            <div class="top-bar" style="position: relative">
-                <div style="width: 10%; height: 100%; position: absolute; right: 10px; top: 18px;">
-                    <button id="logout-btn" class="btn btn-danger" style="width: 100%; height: 50%">Logout</button>
+            <div class="top-bar">
+                <div
+                    style="width: 80%; height: 100%; display: flex; justify-content: space-around; align-items: center">
+                    <div id=" organizer-events-choice" class="tab active" data-tab-target="#organizer-events-tab">
+                        <h1 style="font-weight: bold">Events</h1>
+                    </div>
+                    <div id="organizer-requests-choice" class="tab" data-tab-target="#organizer-requests-tab">
+                        <h1 style="font-weight: bold">Requests</h1>
+                    </div>
+                </div>
+                <div style="width: 20%; height: 100%; display: flex; justify-content: center; align-items: center">
+                    <button id="logout-btn" class="btn btn-danger" style="width: 50%; height: 50%">Logout</button>
                 </div>
             </div>
-            <div class="events-wrapper"></div>
+            <div class="content-wrapper">
+                <div id="organizer-events-tab" class="active" data-tab-content></div>
+                <div id="organizer-requests-tab" data-tab-content></div>
+            </div>
         </div>
     </div>
 </body>
