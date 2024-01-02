@@ -1,92 +1,14 @@
 [
     {
-        "eventTitle": "Basketball Tournament",
-        "eventID": 1,
-        "name": "admin admin",
-        "email": "admin@example.com"
+        "eventTitle": "Beach Party",
+        "eventID": 11,
+        "name": "test test",
+        "email": "test@gmail.com"
     },
     {
-        "eventTitle": "mishua naa",
-        "eventID": 3,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "mishua naa",
-        "eventID": 3,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "mishua naa",
-        "eventID": 3,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "hahanewyear@hfhdaf",
-        "eventID": 2,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "Basketball Tournament",
-        "eventID": 1,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "TEST@HDAHFAD",
-        "eventID": 4,
-        "name": "Joshua Napinas",
-        "email": "joshua@gmail.com"
-    },
-    {
-        "eventTitle": "testinngi akong idol",
-        "eventID": 8,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "maghipos",
-        "eventID": 7,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "Badminton Tryouts",
-        "eventID": 9,
-        "name": "Joshua Napinas",
-        "email": "joshua@gmail.com"
-    },
-    {
-        "eventTitle": "maghipos",
-        "eventID": 7,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "testinngi akong idol",
-        "eventID": 8,
-        "name": "admin admin",
-        "email": "admin@example.com"
-    },
-    {
-        "eventTitle": "Badminton Tryouts",
-        "eventID": 9,
-        "name": "Joshua Napinas",
-        "email": "joshua@gmail.com"
-    },
-    {
-        "eventTitle": "Badminton Tryouts",
-        "eventID": 9,
-        "name": "Joshua Napinas",
-        "email": "joshua@gmail.com"
-    },
-    {
-        "eventTitle": "New Year Celebration",
-        "eventID": 4,
-        "name": "Joshua Napinas",
-        "email": "joshua@gmail.com"
+        "eventTitle": "test",
+        "eventID": 13,
+        "name": "test test",
+        "email": "test@gmail.com"
     }
 ]

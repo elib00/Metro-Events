@@ -8,7 +8,21 @@ $eventsJSON = "../data/events.json";
 $joinRequestsJSON = "../data/join_request.json";
 $participantsJSON = "../data/participants.json";
 $approvedJoinRequestsJSON = "../data/approved_join_requests.json";
-$notificationsJSON = "../data/notifications.json";
+// $notificationsJSON = "../data/notifications.json";
+$declinedJoinRequestsJSON = "../data/declined_join_requests.json";
+$cancelledEventsJSON = "../data/cancelled_events.json";
+
+function getCancelledEventsData(){
+    global $cancelledEventsJSON;
+
+    if(!file_exists($cancelledEventsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($cancelledEventsJSON);
+    return json_decode($data, true);
+}
 
 function getCurrentUser(){
     return json_decode($_COOKIE["user"]);
@@ -38,17 +52,17 @@ function getReviewsData(){
     return json_decode($data, true);
 }
 
-function getNotificationsData(){
-    global $notificationsJSON;
+// function getNotificationsData(){
+//     global $notificationsJSON;
 
-    if(!file_exists($notificationsJSON)){
-        echo "File not found";
-        return [];
-    }
+//     if(!file_exists($notificationsJSON)){
+//         echo "File not found";
+//         return [];
+//     }
 
-    $data = file_get_contents($notificationsJSON);
-    return json_decode($data, true);
-}
+//     $data = file_get_contents($notificationsJSON);
+//     return json_decode($data, true);
+// }
 
 function getApprovedJoinRequests(){
     global $approvedJoinRequestsJSON;
@@ -59,6 +73,18 @@ function getApprovedJoinRequests(){
     }
 
     $data = file_get_contents($approvedJoinRequestsJSON);
+    return json_decode($data, true);
+}
+
+function getDeclinedJoinRequestsData(){
+    global $declinedJoinRequestsJSON;
+
+    if(!file_exists($declinedJoinRequestsJSON)){
+        echo "File not found";
+        return [];
+    }
+
+    $data = file_get_contents($declinedJoinRequestsJSON);
     return json_decode($data, true);
 }
 
@@ -209,6 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
     } 
 }
 
+//get approved requests data
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
     $action = $_POST["action"];
     if ($action === "getApprovedJoinRequests" && function_exists("getApprovedJoinRequests")) {
@@ -217,4 +244,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
     } 
 }
 
+//get declined requests
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getDeclinedJoinRequestsData" && function_exists("getDeclinedJoinRequestsData")) {
+        $data = getDeclinedJoinRequestsData();
+        echo json_encode($data);
+    } 
+}
+
+//get cancelled events
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["action"])) {
+    $action = $_POST["action"];
+    if ($action === "getCancelledEventsData" && function_exists("getCancelledEventsData")) {
+        $data = getCancelledEventsData();
+        echo json_encode($data);
+    } 
+}
 ?>

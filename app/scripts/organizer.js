@@ -1,8 +1,6 @@
 import { getEvents } from "./utility.js";
 import { getJoinRequests } from "./utility.js";
 import { displayMyEvents } from "./utility.js";
-import { getApprovedJoinRequestsNotifications } from "./utility.js";
-
 
 document.addEventListener("DOMContentLoaded", function(){
     getEvents("organizer");

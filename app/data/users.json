@@ -17,24 +17,8 @@
     },
     {
         "id": 3,
-        "name": "Thomas Danjo",
-        "email": "thomas@gmail.com",
-        "password": "123",
-        "isOrganizer": true,
-        "isAdmin": false
-    },
-    {
-        "id": 4,
-        "name": "Thea Napinas",
-        "email": "thea@gmail.com",
-        "password": "123",
-        "isOrganizer": true,
-        "isAdmin": false
-    },
-    {
-        "id": 5,
-        "name": "Johann Gabriel",
-        "email": "gab@gmail.com",
+        "name": "test test",
+        "email": "test@gmail.com",
         "password": "123",
         "isOrganizer": true,
         "isAdmin": false

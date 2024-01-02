@@ -1,11 +1,5 @@
 [
     {
-        "eventID": 4,
-        "id": 1,
-        "name": "admin admin",
-        "body": "hu"
-    },
-    {
         "eventID": 9,
         "id": 2,
         "name": "Johann Gabriel",
@@ -24,12 +18,6 @@
         "body": "huy"
     },
     {
-        "eventID": 8,
-        "id": 5,
-        "name": "admin admin",
-        "body": "unyaa?"
-    },
-    {
         "eventID": 9,
         "id": 6,
         "name": "admin admin",
@@ -42,9 +30,15 @@
         "body": "unya?"
     },
     {
-        "eventID": 10,
-        "id": 8,
-        "name": "Joshua Napinas",
-        "body": "hiiii"
+        "eventID": 11,
+        "id": 9,
+        "name": "admin admin",
+        "body": "hi gaunsa mo ara"
+    },
+    {
+        "eventID": 12,
+        "id": 10,
+        "name": "admin admin",
+        "body": "it was fun"
     }
 ]

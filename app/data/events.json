@@ -6,20 +6,7 @@
         "time": "12:00",
         "venue": "Cebu",
         "organizer": "Joshua Napinas",
-        "participants": [
-            "admin admin"
-        ]
-    },
-    {
-        "id": 4,
-        "title": "New Year Celebration",
-        "date": "2024-01-02",
-        "time": "14:55",
-        "venue": "Dalaguete, Cebu",
-        "organizer": "admin admin",
-        "participants": [
-            "Joshua Napinas"
-        ]
+        "participants": []
     },
     {
         "id": 5,
@@ -64,9 +51,7 @@
         "time": "20:05",
         "venue": "Dalaguete, Cebu",
         "organizer": "admin admin",
-        "participants": [
-            "Joshua Napinas"
-        ]
+        "participants": []
     },
     {
         "id": 10,
@@ -75,6 +60,26 @@
         "time": "10:48",
         "venue": "Test",
         "organizer": "Joshua Napinas",
+        "participants": []
+    },
+    {
+        "id": 11,
+        "title": "Beach Party",
+        "date": "2024-01-02",
+        "time": "13:40",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "admin admin",
+        "participants": [
+            "test test"
+        ]
+    },
+    {
+        "id": 12,
+        "title": "test",
+        "date": "2024-01-02",
+        "time": "13:59",
+        "venue": "Dalaguete, Cebu",
+        "organizer": "admin admin",
         "participants": []
     }
 ]

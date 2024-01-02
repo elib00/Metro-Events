@@ -2,6 +2,7 @@
 include("api.php");
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $eventsData = getEventsData();
+    $cancelledEvents = getCancelledEventsData();
 
     $removedEvent = null;
     //removing the event from the event json
@@ -12,10 +13,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             break;
         }
     }
-
-    $removedEvent["type"] = "cancel";
-    $notificationsData = getNotificationsData();
-    $notificationsData[] = $removedEvent;
 
     //when cancelling events, also remove all the reviews from the reviews json
     $reviewsData = getReviewsData();
@@ -33,10 +30,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 
+    $cancelledEvents[] = $removedEvent;
+
     file_put_contents($eventsJSON, json_encode(array_values($eventsData), JSON_PRETTY_PRINT));
-    file_put_contents($notificationsJSON, json_encode(array_values($notificationsData), JSON_PRETTY_PRINT));
+    // file_put_contents($notificationsJSON, json_encode(array_values($notificationsData), JSON_PRETTY_PRINT));
     file_put_contents($reviewsJSON, json_encode(array_values($reviewsData), JSON_PRETTY_PRINT));
     file_put_contents($approvedJoinRequestsJSON, json_encode(array_values($approvedData), JSON_PRETTY_PRINT));
+    file_put_contents($cancelledEventsJSON, json_encode(array_values($cancelledEvents), JSON_PRETTY_PRINT));
     
     echo json_encode($removedEvent);
 }

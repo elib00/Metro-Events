@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "eventTitle": "test",
+        "eventID": 12,
+        "name": "test test",
+        "email": "test@gmail.com"
+    }
+]

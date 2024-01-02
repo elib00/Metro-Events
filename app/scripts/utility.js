@@ -35,6 +35,8 @@ export function getEvents(type) {
                     // console.log(reviewsData);
                     generateEventsContent(type, response, reviewsData);
                     getApprovedJoinRequestsNotifications();
+                    getDeclinedJoinRequestsNotifications();
+                    getCancelledEventsNotifications();
                 }
             });
         }
@@ -98,7 +100,44 @@ export function displayMyEvents(type){
     });
 }
 
-export function getApprovedJoinRequestsNotifications(){
+function getCancelledEventsNotifications(){
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getCurrentUser"
+        },
+        success: (response) => {
+            let currentUser = JSON.parse(response);
+            console.log(currentUser);
+
+            //get the approved requests
+            $.ajax({
+                url: "../server/api.php",
+                method: "POST",
+                data: {
+                    action: "getCancelledEventsData"
+                },
+                success: (response) => {
+                    let cancelledEvents = JSON.parse(response);
+                    console.log(cancelledEvents);
+
+                    for(let i = 0; i < cancelledEvents.length; i++) {
+                        for(let j = 0; j < cancelledEvents[i]["participants"].length; j++){
+                            let participant = cancelledEvents[i]["participants"][j];
+                            if(participant === currentUser.name){
+                                alert(`This event has been cancelled: ${cancelledEvents[i].title}`);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+
+function getApprovedJoinRequestsNotifications(){
     $.ajax({
         url: "../server/api.php",
         method: "POST",
@@ -123,6 +162,39 @@ export function getApprovedJoinRequestsNotifications(){
                     for(let i = 0; i < approvedJoinRequests.length; i++){
                         if(approvedJoinRequests[i].name === currentUser.name){
                             alert(`You have been accepted for this join request: ${approvedJoinRequests[i].eventTitle}`);
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+
+function getDeclinedJoinRequestsNotifications(){
+    $.ajax({
+        url: "../server/api.php",
+        method: "POST",
+        data: {
+            action: "getCurrentUser"
+        },
+        success: (response) => {
+            let currentUser = JSON.parse(response);
+            console.log(currentUser);
+
+            //get the approved requests
+            $.ajax({
+                url: "../server/api.php",
+                method: "POST",
+                data: {
+                    action: "getDeclinedJoinRequestsData"
+                },
+                success: (response) => {
+                    let declinedJoinRequests = JSON.parse(response);
+                    console.log(declinedJoinRequests);
+
+                    for(let i = 0; i < declinedJoinRequests.length; i++){
+                        if(declinedJoinRequests[i].name === currentUser.name){
+                            alert(`Your request have been declined to join this event: ${declinedJoinRequests[i].eventTitle}`);
                         }
                     }
                 }
@@ -185,9 +257,8 @@ function declineJoinRequest(event, joinRequestData){
         const parentToRemove = triggerElement.closest(".join-card");
         parentToRemove.remove();
 
-        //add the data to the participants json
         $.ajax({
-            url: "../server/add_participant.php",
+            url: "../server/decline_participant.php",
             method: "POST",
             data: joinRequestData,
             success: (response) => {
